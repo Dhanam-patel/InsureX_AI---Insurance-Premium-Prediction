@@ -1,52 +1,204 @@
 
-# API Mini Projects
+# Insurance Premium Prediction - Full Stack Application
 
-A curated collection of small, focused API projects that document my learning journey in backend API development, machine learning model serving, and simple interactive frontends using Streamlit.
+A production-ready full-stack ML application for insurance premium prediction. Features a FastAPI backend with a modern React frontend.
 
-Each project in this repository is a compact, self-contained example that demonstrates real-world integration patterns: API design (FastAPI), model serialization and serving (pickle), data validation (Pydantic), and lightweight UIs (Streamlit).
+## 📋 Project Structure
 
----
-
-## Why this repository
-
-This repository is my playground to build and share mini API projects that solve narrow problems and illustrate practical patterns. The goals are:
-
-- Learn and demonstrate backend API best practices using FastAPI.
-- Show how to serve ML models with serialized artifacts (pickle / joblib).
-- Provide simple interactive frontends using Streamlit for quick demos.
-- Offer reproducible examples you can run locally and adapt.
-
----
-
-## Quick overview
-
-- Repo name: `API-mini-Projects` (owner: `Dhanam-patel`)
-- Main focus: API design, ML model serving, interactive demos.
-
----
-
-## List of Projects
-
-- Insurance Premium ML API 
-
----
-## Global setup (how to get the repo and environment ready)
-
-These steps are written for Windows PowerShell (your default shell). They are copy-paste friendly.
-
-1. Clone the repository:
-
-```powershell
-git clone https://github.com/<your-username>/API-mini-Projects.git
-cd "API-mini-Projects"
+```
+Insurance Premium Prediction/
+├── backend/                      # FastAPI backend
+│   ├── app/
+│   │   ├── main.py               # FastAPI application entry point
+│   │   ├── routes/
+│   │   │   ├── health.py         # Health check endpoints
+│   │   │   └── predict.py        # Prediction endpoint
+│   │   ├── services/
+│   │   │   └── prediction.py     # ML prediction logic & model loading
+│   │   ├── schemas/
+│   │   │   └── insurance.py      # Pydantic validation models
+│   │   └── utils/
+│   │       └── config.py         # Configuration & city tiers
+│   ├── models/                   # ML models directory
+│   │   └── model.pkl             # Trained sklearn model
+│   ├── requirements.txt
+│   ├── .env                      # Environment variables
+│   └── README.md
+│
+├── frontend/                     # React + Vite frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── PredictionForm.jsx    # Main form component
+│   │   │   └── PredictionForm.css    # Professional styling
+│   │   ├── services/
+│   │   │   └── api.js                # API client
+│   │   ├── App.jsx                   # Root component
+│   │   ├── App.css                   # App styling
+│   │   ├── main.jsx                  # React entry
+│   │   └── index.css                 # Global styles
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── .env
+│   └── README.md
+│
+└── README.md (this file)
 ```
 
-2. Create and activate a virtual environment (recommended):
+## 🚀 Quick Start
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+### Backend
+
+```bash
+# Navigate to backend
+cd backend
+
+# Create virtual environment
+python -m venv venv
+source venv/Scripts/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start server
+uvicorn app.main:app --reload
 ```
+
+**Backend runs on:** `http://localhost:8000`
+- API Docs: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+### Frontend
+
+```bash
+# Navigate to frontend
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+```
+
+**Frontend runs on:** `http://localhost:5173`
+
+## 📡 API Endpoints
+
+### Health Check
+```
+GET /health
+```
+
+### Predict Premium
+```
+POST /api/predict
+Content-Type: application/json
+
+{
+  "age": 30,
+  "weight": 70,
+  "height": 1.75,
+  "income_lpa": 10,
+  "smoker": false,
+  "city": "Mumbai",
+  "occupation": "private_job"
+}
+```
+
+**Response:**
+```json
+{
+  "prediction": 45000.50,
+  "risk_level": "medium"
+}
+```
+
+## ✨ Features
+
+### Backend
+- ✅ Clean, modular architecture
+- ✅ Pydantic input validation
+- ✅ CORS middleware enabled
+- ✅ Automatic computed fields (BMI, age group, risk level)
+- ✅ Comprehensive error handling
+- ✅ OpenAPI/Swagger documentation
+- ✅ Type hints throughout
+- ✅ Professional code quality
+
+### Frontend
+- ✅ Modern React with Hooks
+- ✅ Vite for blazing fast development
+- ✅ Professional SaaS-style UI
+- ✅ Responsive design (mobile, tablet, desktop)
+- ✅ Form validation & error handling
+- ✅ Loading states
+- ✅ Risk level visualization
+- ✅ Clean, minimal CSS
+
+## 🎨 UI/UX Design
+
+The frontend is built to look like a professional SaaS product:
+- **Clean spacing** with 4px base grid
+- **Minimal color palette** (blue primary, with red/orange/green accents)
+- **Subtle shadows** for depth
+- **Professional typography** using system fonts
+- **No overused gradients** - just meaningful visual hierarchy
+- **Glassmorphic cards** with soft edges
+- **Smooth transitions** for interactions
+
+## 🔧 Configuration
+
+### Backend (.env)
+```
+DEBUG=false
+API_HOST=0.0.0.0
+API_PORT=8000
+ENVIRONMENT=production
+ALLOWED_ORIGINS=http://localhost:5173
+```
+
+### Frontend (.env)
+```
+VITE_API_URL=http://localhost:8000
+```
+
+## 📦 Production Deployment
+
+### Backend
+```bash
+gunicorn -w 4 -b 0.0.0.0:8000 app.main:app
+```
+
+### Frontend
+```bash
+npm run build
+# Deploy dist/ folder to any static hosting
+```
+
+## 📚 Additional Docs
+
+- [Backend Documentation](backend/README.md)
+- [Frontend Documentation](frontend/README.md)
+
+## 🛠️ Technology Stack
+
+**Backend**
+- FastAPI (modern web framework)
+- Pydantic (data validation)
+- scikit-learn (ML inference)
+- Uvicorn (ASGI server)
+- Gunicorn (production server)
+
+**Frontend**
+- React 18
+- Vite (build tool)
+- Vanilla CSS (no dependencies)
+- Modern ES6+ JavaScript
+
+## 📝 License
+
+Proprietary - 2024
 
 3. Install dependencies for a specific project before running that project (instructions below). Each project typically includes its own `requirements.txt`.
 
