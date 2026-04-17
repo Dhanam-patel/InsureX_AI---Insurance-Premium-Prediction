@@ -4,6 +4,6 @@ gunicorn
 scikit-learn
 joblib
 pandas
-numpy
-pydantic
+numpy<2.0.0
+pydantic>=2.0
 python-dotenv

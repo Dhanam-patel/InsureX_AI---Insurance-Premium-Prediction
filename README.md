@@ -65,6 +65,7 @@ cd "InsureX AI - Insurance Premium Prediction"
 ```
 
 ### 2️⃣ Backend Setup
+*Recommended: Python 3.11.x*
 ```bash
 cd backend
 python -m venv venv
